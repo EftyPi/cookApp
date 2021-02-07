@@ -3,14 +3,22 @@
         <form>
             <div class="form-group">
                 <label for="name" class="control-label">Name</label>
-                <input type="text" id="name" class="from-control">
+                <input 
+                    type="text" 
+                    id="name" 
+                    class="from-control"
+                    #nameInput>
             </div>
             <div class="form-group">
                 <label for="amount" class="control-label">Amount</label>
-                <input type="number" id="amount" class="from-control">
+                <input 
+                    type="number" 
+                    id="amount" 
+                    class="from-control"
+                    #amountInput>
             </div>
             <div>
-                <button class="btn btn-success" type="submit">Add</button> 
+                <button class="btn btn-success" type="submit" (click)="onAddItem()">Add</button> 
                 <button class="btn btn-danger" type="button">Delete</button> 
                 <button class="btn btn-primary" type="button">Clear</button> 
             </div>
