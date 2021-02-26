@@ -8,26 +8,33 @@ import { Recipe } from './recipe.model';
 export class RecipeService{
     recipesChanged = new Subject<Recipe[]>();
 
-    private recipes: Recipe[] = [
-        new Recipe(
-            'test name',
-            'this is a test',
-            'https://gimmedelicious.com/wp-content/uploads/2020/01/30-Minute-Instant-Pot-Butter-Chicken-7.jpg',
-            [
-                new Ingredient('Meat', 1),
-                new Ingredient('Rice', 1)
-            ]),
-        new Recipe(
-            'Another test name',
-            'this is a new test',
-            'https://gimmedelicious.com/wp-content/uploads/2020/01/30-Minute-Instant-Pot-Butter-Chicken-7.jpg',
-            [
-                new Ingredient('Chicken', 1),
-                new Ingredient('Basmati', 1),
-            ])
-    ];
+    // private recipes: Recipe[] = [
+    //     new Recipe(
+    //         'Beef Burger',
+    //         'One of Bristol\'s best burger',
+    //         'https://visitbristol.co.uk/dbimgs/Asado%20burger.jpg_tmp.jpg',
+    //         [
+    //             new Ingredient('Beef', 2),
+    //             new Ingredient('Buns', 1)
+    //         ]),
+    //     new Recipe(
+    //         'Butter Chicken',
+    //         'A delicious butter chicken recipe',
+    //         'https://gimmedelicious.com/wp-content/uploads/2020/01/30-Minute-Instant-Pot-Butter-Chicken-7.jpg',
+    //         [
+    //             new Ingredient('Chicken', 2),
+    //             new Ingredient('Basmati', 1),
+    //         ])
+    // ];
+
+    private recipes: Recipe[] = [];
 
     constructor(private slService: ShoppingListService){}
+
+    setRecipes(recipes: Recipe[]): void {
+        this.recipes = recipes;
+        this.recipesChanged.next(this.getRecipes());
+    }
 
     getRecipes(): Recipe[] {
         // get a copy using slice
