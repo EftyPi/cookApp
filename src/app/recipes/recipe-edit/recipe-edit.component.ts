@@ -61,7 +61,7 @@ export class RecipeEditComponent implements OnInit {
         });
     }
 
-    get controls(): AbstractControl[] {
+    get ingredientsControls(): AbstractControl[] {
         return (this.recipeForm.get('ingredients') as FormArray).controls;
     }
 

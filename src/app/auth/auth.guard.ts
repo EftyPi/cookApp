@@ -11,7 +11,8 @@ export class AuthGuard implements CanActivate {
                 private router: Router) {}
 
     canActivate(route: ActivatedRouteSnapshot,
-                router: RouterStateSnapshot): boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> {
+                router: RouterStateSnapshot):
+                boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> {
         return this.authService.user.pipe(
             // always take the latest user value
             take(1),
