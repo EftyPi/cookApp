@@ -1,14 +1,17 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { exhaustMap, map, take, tap } from 'rxjs/operators';
+import { AuthService } from '../auth/auth.service';
 import { Recipe } from '../recipes/recipe.model';
 import { RecipeService } from '../recipes/recipe.service';
 
 @Injectable({providedIn: 'root'})
 export class DataStorageService {
 
-    constructor(private http: HttpClient, private recipeService: RecipeService) {}
+    constructor(private http: HttpClient,
+                private recipeService: RecipeService,
+                private authService: AuthService) {}
 
     storeRecipes(): void {
         const recipes = this.recipeService.getRecipes();
@@ -21,10 +24,15 @@ export class DataStorageService {
             });
     }
 
-    fetchRecipes() {
+    fetchRecipes(): Observable<Recipe[]> {
+        // take 1 value and then automatically unsubscribe
+        // exhaustMap waits for the user observable to complete and replaces the user observable with the new observable inside the function
+
         return this.http.get<Recipe[]>(
-            'https://cookapp-fe812-default-rtdb.firebaseio.com/recipes.json')
-            .pipe(map(recipes => {
+            'https://cookapp-fe812-default-rtdb.firebaseio.com/recipes.json'
+        )
+        .pipe(
+            map(recipes => {
                 return recipes.map(recipe => {
                     // tranform every recipe
                     // in case a recipe doesn't have ingredients, set it to an empty array
